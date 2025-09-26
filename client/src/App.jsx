@@ -1,5 +1,5 @@
 import './App.css';
-import ChatWindow from './components/chatwindow.jsx'; // Importamos el componente
+import ChatWindow from './components/chatwindow.jsx'; 
 
 function App() {
   return (
