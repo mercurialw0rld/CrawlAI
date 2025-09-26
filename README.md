@@ -44,14 +44,6 @@
 - **Axios** - HTTP client for web crawling
 - **CORS** - Cross-origin resource sharing middleware
 
-## 📋 Prerequisites
-
-Before running this application, make sure you have the following installed:
-
-- **Node.js** (v16 or higher)
-- **npm** or **yarn** package manager
-- **Google Gemini API Key** (get one from [Google AI Studio](https://makersuite.google.com/app/apikey))
-
 
 ## 💬 Usage
 
@@ -111,4 +103,5 @@ Project Link: [https://github.com/mercurialw0rld/crawlai](https://github.com/mer
     <a href="#-crawlai---intelligent-web-crawling-chatbot">Back to Top</a>
   </p>
 </div></content>
+
 
