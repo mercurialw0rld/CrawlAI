@@ -35,6 +35,7 @@ app.post('/api/chat', upload.single('pdfFile'), async (req, res) => {
         const history = req.body.history ? JSON.parse(req.body.history) : { user: [], bot: [] };
         // convertir pdf a base64 si existe
         if (req.file){
+            console.log('Archivo PDF recibido:', req.file.originalname);
             pdfBase64 = req.file.buffer.toString('base64');
         }
         
@@ -77,7 +78,7 @@ app.post('/api/chat', upload.single('pdfFile'), async (req, res) => {
     
             CONTEXTO:
             ---
-            ${context}, DEBES SER COMPLETO AL RESPONDER, no des respuestas concisas o cortas, debes ser explicativo y detallado. Debes ser sumamente amigable y paciente!
+            ${context}, DEBES SER COMPLETO AL RESPONDER, no des respuestas concisas o cortas, debes ser explicativo y detallado. Debes ser sumamente amigable y paciente!${context ? ' Si se proporcionó una URL y se scrapeó contenido, comienza tu respuesta con "Aquí tienes la información:" seguido de la respuesta detallada.' : ''}
             ---
             HISTORIAL DE CONVERSACIÓN:
             ---
@@ -87,8 +88,9 @@ app.post('/api/chat', upload.single('pdfFile'), async (req, res) => {
             PREGUNTA: ${userMessage}`;
 
         if (pdfBase64) {
+            console.log('Generando respuesta con PDF adjunto...');
             const contents = [
-                { text: userMessage },
+                { text: prompt },
                 {
                     inlineData: {
                         // Usamos el mimetype detectado por multer
@@ -101,18 +103,12 @@ app.post('/api/chat', upload.single('pdfFile'), async (req, res) => {
             let response = await genAI.models.generateContent({
                 model: "gemini-2.0-flash",
                 contents: contents,
-                config: {
-                systemInstruction: `${prompt}`,
-                },
             });
             return res.json({ aiResponse: response.text });
         } else {
             let response = await genAI.models.generateContent({
                 model: "gemini-2.0-flash",
-                contents: `${userMessage}`,
-                config: {
-                    systemInstruction: `${prompt}`,
-                },
+                contents: [{ text: prompt }],
             });
             return res.json({ aiResponse: response.text });
         }
