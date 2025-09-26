@@ -19,7 +19,21 @@ function ChatWindow() {
     setIsLoading(true);
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await axios.post(`${apiUrl}/api/chat`, { userMessage, url, history: JSON.stringify(conversationHistory), pdfFile });
+      
+      // Crear FormData para enviar el archivo PDF
+      const formData = new FormData();
+      formData.append('userMessage', userMessage);
+      formData.append('url', url || '');
+      formData.append('history', JSON.stringify(conversationHistory));
+      if (pdfFile) {
+        formData.append('pdfFile', pdfFile);
+      }
+      
+      const response = await axios.post(`${apiUrl}/api/chat`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       const aiMessage = { sender: 'bot', text: response.data.aiResponse };
       setMessages(prevMessages => [...prevMessages, aiMessage]);
