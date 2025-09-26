@@ -16,7 +16,9 @@ function ChatWindow() {
 
     setIsLoading(true);
     try {
-      const response = await axios.post('http://localhost:5000/api/chat', { userMessage: userMessage, url: url });
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.post(`${apiUrl}/api/chat`, { userMessage, url });
+
       const aiMessage = { sender: 'bot', text: response.data.aiResponse };
       setMessages(prevMessages => [...prevMessages, aiMessage]);
     } catch (error) {
