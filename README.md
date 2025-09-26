@@ -96,12 +96,6 @@ We welcome contributions! Please follow these steps:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
-
-- **Google Gemini AI** for powering the intelligent responses
-- **React Community** for the amazing frontend framework
-- **Vite** for the lightning-fast development experience
-- **GitHub** for inspiration on the dark theme design
 
 ## 📞 Contact
 
@@ -117,4 +111,5 @@ Project Link: [https://github.com/mercurialw0rld/crawlai](https://github.com/mer
     <a href="#-crawlai---intelligent-web-crawling-chatbot">Back to Top</a>
   </p>
 </div></content>
+
 <parameter name="filePath">README.md
