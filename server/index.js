@@ -5,7 +5,7 @@ require('dotenv').config();
 const { Firecrawl } = require('@mendable/firecrawl-js');
 const { GoogleGenAI } = require('@google/genai');
 crawledPages = {};
-conversationHistories = {user : [], bot: []};
+
 
 // crear una instancia de express
 const app = express();
@@ -27,14 +27,13 @@ app.get('/', (req, res) => {
 app.post('/api/chat', async (req, res) => {
     try {
         let context = '';
-        const { userMessage, url } = req.body;
+        const { userMessage, url, history } = req.body;
         console.log('Cuerpo de la solicitud:', req.body);
         // validar que userMessage y url estén presentes
         if(!userMessage) {
             return res.status(400).json({ error: 'Debes dejar un mensaje, es obligatorio.' });
         }
         // scraper url
-        conversationHistories.user.push(userMessage);
 
         if (url && url.trim() !== '') {
             if (crawledPages[url]) {
@@ -72,8 +71,8 @@ app.post('/api/chat', async (req, res) => {
             ---
             HISTORIAL DE CONVERSACIÓN:
             ---
-            Usuario: ${conversationHistories.user.join('\nUsuario: ')}
-            Bot: ${conversationHistories.bot.join('\nBot: ')}
+            Usuario: ${history.user.join('\nUsuario: ')}
+            Bot: ${history.bot.join('\nBot: ')}
             ---
             PREGUNTA: ${userMessage}`;
 
@@ -88,7 +87,6 @@ app.post('/api/chat', async (req, res) => {
         if (url && url.trim() !== '') {
             response.text = `Aquí tienes la información que encontré en la página ${url}:\n\n${response.text}`;
         }
-        conversationHistories.bot.push(response.text);
         res.json({ aiResponse: response.text });
         
     } catch (error) {
