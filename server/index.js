@@ -83,11 +83,7 @@ app.post('/api/chat', async (req, res) => {
               systemInstruction: `${prompt}`,
             },
         });
-        let responseText = response.text;
-        if (url && url.trim() !== '') {
-            responseText += `Aquí tienes la información que encontré en la página ${url}:\n\n${responseText}`;
-        }
-        res.json({ aiResponse: responseText });
+        res.json({ aiResponse: response.text });
 
     } catch (error) {
         console.error('Error al procesar la solicitud:', error);
