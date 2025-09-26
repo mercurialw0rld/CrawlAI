@@ -9,18 +9,21 @@ function ChatWindow() {
   ]);
 
   const [isLoading, setIsLoading] = useState(false);
+  let conversationHistory = { user: [], bot: [] };
 
   const handleSendMessage = async (userMessage, url) => {
     const newUserMessage = { sender: 'user', text: userMessage };
     setMessages(prevMessages => [...prevMessages, newUserMessage]);
+    conversationHistory.user.push(userMessage);
 
     setIsLoading(true);
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await axios.post(`${apiUrl}/api/chat`, { userMessage, url });
+      const response = await axios.post(`${apiUrl}/api/chat`, { userMessage, url, history: conversationHistory });
 
       const aiMessage = { sender: 'bot', text: response.data.aiResponse };
       setMessages(prevMessages => [...prevMessages, aiMessage]);
+      conversationHistory.bot.push(response.data.aiResponse);
     } catch (error) {
       console.error('Error al comunicarse con el servidor:', error);
       const errorMessage = { sender: 'bot', text: '😔 Lo siento, hubo un error al procesar tu solicitud. Inténtalo de nuevo. 🔄' };
