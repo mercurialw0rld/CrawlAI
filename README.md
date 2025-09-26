@@ -13,6 +13,8 @@
 
 **CrawlAI** is an intelligent chatbot powered by Google's Gemini AI that can crawl and analyze web content in real-time. Ask questions about any website's content and get instant, contextual responses. Whether you need to understand a webpage, extract information, or simply have a conversation, CrawlAI combines web crawling capabilities with advanced AI to provide comprehensive answers.
 
+<img src="screenshot.png">
+
 ## ✨ Features
 
 ### 🚀 Core Functionality
@@ -103,5 +105,6 @@ Project Link: [https://github.com/mercurialw0rld/crawlai](https://github.com/mer
     <a href="#-crawlai---intelligent-web-crawling-chatbot">Back to Top</a>
   </p>
 </div></content>
+
 
 
