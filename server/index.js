@@ -83,12 +83,12 @@ app.post('/api/chat', async (req, res) => {
               systemInstruction: `${prompt}`,
             },
         });
-        console.log(response.text);
+        let responseText = response.text;
         if (url && url.trim() !== '') {
-            response.text = `Aquí tienes la información que encontré en la página ${url}:\n\n${response.text}`;
+            responseText += `Aquí tienes la información que encontré en la página ${url}:\n\n${responseText}`;
         }
-        res.json({ aiResponse: response.text });
-        
+        res.json({ aiResponse: responseText });
+
     } catch (error) {
         console.error('Error al procesar la solicitud:', error);
         return res.status(500).json({ error: 'Error interno del servidor.' });
