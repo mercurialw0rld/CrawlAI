@@ -8,7 +8,7 @@ import React, { useState } from 'react';
       e.preventDefault(); 
       if (!userMessage.trim()) return; 
 
-      onSendMessage(userMessage, url); 
+      onSendMessage(userMessage, url, e.target.pdfFile.files[0]); 
 
       setUserMessage(''); 
      
@@ -16,6 +16,10 @@ import React, { useState } from 'react';
 
   return (
     <form className="input-bar" onSubmit={handleSubmit}>
+      <input 
+        type="file" 
+        name="pdfFile" 
+        accept="application/pdf" />   
       <input
         type="text"
         placeholder="URL del artículo..."

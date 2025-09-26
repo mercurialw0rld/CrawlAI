@@ -11,7 +11,7 @@ function ChatWindow() {
   const [isLoading, setIsLoading] = useState(false);
   let conversationHistory = { user: [], bot: [] };
 
-  const handleSendMessage = async (userMessage, url) => {
+  const handleSendMessage = async (userMessage, url, pdfFile) => {
     const newUserMessage = { sender: 'user', text: userMessage };
     setMessages(prevMessages => [...prevMessages, newUserMessage]);
     conversationHistory.user.push(userMessage);
@@ -19,7 +19,7 @@ function ChatWindow() {
     setIsLoading(true);
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await axios.post(`${apiUrl}/api/chat`, { userMessage, url, history: conversationHistory });
+      const response = await axios.post(`${apiUrl}/api/chat`, { userMessage, url, history: conversationHistory, pdfFile });
 
       const aiMessage = { sender: 'bot', text: response.data.aiResponse };
       setMessages(prevMessages => [...prevMessages, aiMessage]);
