@@ -68,7 +68,7 @@ app.post('/api/chat', async (req, res) => {
     
             CONTEXTO:
             ---
-            ${context}, SE COMPLETO AL RESPONDER, no des respuestas concisas o cortas, debes ser explicativo y detallado. Debes ser sumamente amigable y paciente!
+            ${context}, DEBES SER COMPLETO AL RESPONDER, no des respuestas concisas o cortas, debes ser explicativo y detallado. Debes ser sumamente amigable y paciente!
             ---
             HISTORIAL DE CONVERSACIÓN:
             ---
@@ -77,7 +77,7 @@ app.post('/api/chat', async (req, res) => {
             ---
             PREGUNTA: ${userMessage}`;
 
-        const response = await genAI.models.generateContent({
+        let response = await genAI.models.generateContent({
             model: "gemini-2.0-flash",
             contents: `${userMessage}`,
             config: {
@@ -85,6 +85,9 @@ app.post('/api/chat', async (req, res) => {
             },
         });
         console.log(response.text);
+        if (url && url.trim() !== '') {
+            response.text = `Aquí tienes la información que encontré en la página ${url}:\n\n${response.text}`;
+        }
         conversationHistories.bot.push(response.text);
         res.json({ aiResponse: response.text });
         
