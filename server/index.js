@@ -27,11 +27,12 @@ app.get('/', (req, res) => {
 });
 
 // recibir datos en una ruta POST
-app.post('/api/chat', async (req, res) => {
+app.post('/api/chat', upload.single('pdfFile'), async (req, res) => {
     try {
         let context = '';
         let pdfBase64 = null;
-        const { userMessage, url, history} = req.body;
+        const { userMessage, url} = req.body;
+        const history = req.body.history ? JSON.parse(req.body.history) : { user: [], bot: [] };
         // convertir pdf a base64 si existe
         if (req.file){
             pdfBase64 = req.file.buffer.toString('base64');
